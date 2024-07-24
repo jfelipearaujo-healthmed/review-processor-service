@@ -19,7 +19,7 @@ func NewToken(config *config.Config) TokenService {
 
 func (t *token) CreateJwtToken(userID uint) (string, error) {
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, jwt.MapClaims{
-		"id":   userID,
+		"iss":  userID,
 		"role": "patient",
 		"exp":  time.Now().Add(time.Hour * 2).Unix(),
 	})
