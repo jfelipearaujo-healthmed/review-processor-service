@@ -29,12 +29,16 @@ type CloudConfig struct {
 	ReviewQueueName string `env:"REVIEW_QUEUE_NAME"`
 }
 
+func (c *CloudConfig) IsBaseEndpointSet() bool {
+	return c.BaseEndpoint != ""
+}
+
 type ExternalServiceConfig struct {
 	UserServiceBaseRoute string `env:"USER_SERVICE_BASE_ROUTE"`
 }
 
-func (c *CloudConfig) IsBaseEndpointSet() bool {
-	return c.BaseEndpoint != ""
+type TokenConfig struct {
+	SignKey string `env:"SIGN_KEY"`
 }
 
 type Config struct {
@@ -42,6 +46,7 @@ type Config struct {
 	DbConfig              *DatabaseConfig        `env:",prefix=DB_"`
 	CloudConfig           *CloudConfig           `env:",prefix=AWS_"`
 	ExternalServiceConfig *ExternalServiceConfig `env:",prefix=EXT_"`
+	TokenConfig           *TokenConfig           `env:",prefix=TOKEN_"`
 }
 
 func LoadFromEnv(ctx context.Context) (*Config, error) {

@@ -108,7 +108,7 @@ func (uc *useCase) HandleCreateReview(ctx context.Context, messageID string, fee
 
 	slog.InfoContext(ctx, "loading doctor for feedback", "message_id", messageID, "doctor_id", appointment.DoctorID)
 
-	doctor, err := uc.userRepository.GetByDoctorID(ctx, appointment.DoctorID)
+	doctor, err := uc.userRepository.GetByDoctorID(ctx, appointment.PatientID, appointment.DoctorID)
 	if err != nil {
 		slog.ErrorContext(ctx, "error loading doctor", "message_id", messageID, "error", err)
 		return err
@@ -125,7 +125,7 @@ func (uc *useCase) HandleCreateReview(ctx context.Context, messageID string, fee
 
 	slog.InfoContext(ctx, "updating doctor rating", "message_id", messageID, "doctor_id", doctor.ID, "rating", newAverage)
 
-	if err := uc.userRepository.UpdateRating(ctx, doctor.ID, newAverage); err != nil {
+	if err := uc.userRepository.UpdateRating(ctx, appointment.PatientID, doctor.ID, newAverage); err != nil {
 		slog.ErrorContext(ctx, "error updating doctor rating", "message_id", messageID, "error", err)
 		return err
 	}
