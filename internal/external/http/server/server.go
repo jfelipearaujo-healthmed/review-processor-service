@@ -15,6 +15,7 @@ import (
 	event_repository "github.com/jfelipearaujo-healthmed/review-processor-service/internal/core/infrastructure/repository/event"
 	feedback_repository "github.com/jfelipearaujo-healthmed/review-processor-service/internal/core/infrastructure/repository/feedback"
 	user_repository "github.com/jfelipearaujo-healthmed/review-processor-service/internal/core/infrastructure/repository/user"
+	"github.com/jfelipearaujo-healthmed/review-processor-service/internal/core/infrastructure/shared/token"
 	"github.com/jfelipearaujo-healthmed/review-processor-service/internal/external/http/handlers/health"
 	"github.com/jfelipearaujo-healthmed/review-processor-service/internal/external/http/handlers/middlewares/logger"
 	"github.com/jfelipearaujo-healthmed/review-processor-service/internal/external/persistence"
@@ -58,10 +59,12 @@ func NewServer(ctx context.Context, config *config.Config) (*Server, error) {
 		return nil, err
 	}
 
+	tokenService := token.NewToken(config)
+
 	eventRepository := event_repository.NewRepository(dbService)
 	appointmentRepository := appointment_repository.NewRepository(dbService)
 	feedbackRepository := feedback_repository.NewRepository(dbService)
-	userRepository := user_repository.NewRepository(config)
+	userRepository := user_repository.NewRepository(config, tokenService)
 
 	eventProcessor := event_processor_uc.NewUseCase(eventRepository, appointmentRepository, feedbackRepository, userRepository)
 

@@ -7,6 +7,6 @@ import (
 )
 
 type Repository interface {
-	GetByDoctorID(ctx context.Context, doctorID uint) (*entities.Doctor, error)
-	UpdateRating(ctx context.Context, doctorID uint, rating float64) error
+	GetByDoctorID(ctx context.Context, patientID, doctorID uint) (*entities.Doctor, error)
+	UpdateRating(ctx context.Context, patientID, doctorID uint, rating float64) error
 }
