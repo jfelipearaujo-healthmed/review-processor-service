@@ -1,23 +1,24 @@
 # Review Processor Service
 
-Service responsible to process all patients reviews.
+Serviço responsável por processar todas as avaliações dos pacientes.
 
-# Local Development
+# Desenvolvimento Local
 
-## Requirements
+## Requisitos
 
-- [Kubernetes](https://kubernetes.io/)
+- [Terraform](https://www.terraform.io/downloads.html)
+- [Terraform Docs](https://github.com/terraform-docs/terraform-docs)
 - [AWS CLI](https://aws.amazon.com/cli/)
 
-## Manual deployment
+## Implantação manual
 
-### Attention
+### Atenção
 
-Before deploying the service, make sure to set the `AWS_ACCESS_KEY_ID` and `AWS_SECRET_ACCESS_KEY` environment variables.
+Antes de implantar o cluster, certifique-se de definir as variáveis ​​de ambiente `AWS_ACCESS_KEY_ID` e `AWS_SECRET_ACCESS_KEY`.
 
-Be aware that this process will take a few minutes (~4 minutes) to be completed.
+Esteja ciente de que esse processo levará alguns minutos (~4 minutos) para ser concluído.
 
-To deploy the service manually, run the following commands in order:
+Para implantar o cluster manualmente, execute os seguintes comandos em ordem:
 
 ```bash
 make init
@@ -25,16 +26,22 @@ make check # this will execute fmt, validate and plan
 make apply
 ```
 
-To destroy the service, run the following command:
+Para destruir o cluster, execute o seguinte comando:
 
 ```bash
 make destroy
 ```
 
-## Automated deployment
+## Implantação Automatizada
 
-The automated deployment is triggered by a GitHub Action.
+A implantação automatizada é acionada por uma GitHub Action.
 
-# License
+# Diagramas
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+## Processamento das Avaliações
+
+![review_processor](./docs/review_processor.svg)
+
+# Licença
+
+Este projeto é licenciado sob a Licença MIT - veja o arquivo [LICENSE](LICENSE) para detalhes.
