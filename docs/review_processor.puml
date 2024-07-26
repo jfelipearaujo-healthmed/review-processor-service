@@ -1,0 +1,26 @@
+@startuml review_processor
+
+title Processamento das Avaliações
+
+queue "Review Queue" as queue
+participant "Review Processor Service" as review_service
+database "Database" as database
+participant "User Service" as user_service
+
+activate review_service
+queue <- review_service : Consome os eventos da fila
+queue --> review_service : Retorna o evento
+review_service -> review_service : Analisa se o evento é de criação\nde feedback
+review_service -> database : Consulta os dados do evento
+database --> review_service : Retorna os dados do evento
+review_service -> user_service : Busca os dados do medico
+user_service --> review_service : Retorna os dados do medico
+review_service -> review_service : Calcula a nova avaliação
+review_service -> user_service : Envia via HTTP a nova avaliação e o feedback
+user_service --> review_service : Feedback enviado
+review_service -> database : Atualiza o status do evento
+database --> review_service : Evento atualizado
+review_service -> queue : Deleta a mensagem da fila
+deactivate review_service
+
+@enduml
